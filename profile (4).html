@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Form</title>
+    <style>
+        /* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Form container styling */
+form {
+    background-color: #ffffff;
+    padding: 20px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Form input fields styling */
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Submit button styling */
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Button hover effect */
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Responsive adjustments */
+@media (max-width:
+</style>
+</head>
+<body>
+    <form id="profileForm">
+        <input type="text" id="name" placeholder="Name" required><br>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="number" id="age" placeholder="Age" required><br>
+        <button type="submit">Save Profile</button>
+    </form>
+
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDg08LsHs5d08HY0o0Yu2gQ-cCDKTIk8Es",
+            authDomain: "msec-fa2e5.firebaseapp.com",
+            projectId: "msec-fa2e5",
+            storageBucket: "msec-fa2e5.appspot.com",
+            messagingSenderId: "433383357889",
+            appId: "1:433383357889:web:36223962e6f8b1a9a1c340",
+            measurementId: "G-TJE2N53YBP"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Initialize Firestore
+        const db = firebase.firestore();
+
+        // Save Profile Function
+        async function saveProfileDetails(name, email, age) {
+            try {
+                const docRef = await db.collection("profiles").add({
+                    name: name,
+                    email: email,
+                    age: age
+                });
+                console.log("Profile saved with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding profile: ", e);
+            }
+        }
+
+        // Form Submission Handling
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+
+            saveProfileDetails(name, email, age);
+        });
+    </script>
+</body>
+</html>
